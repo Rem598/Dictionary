@@ -31,6 +31,7 @@ function displayResults(data) {
 
     const britishAudio = phonetics.find(p => p.text.includes('ˈ') && p.audio) || {};
     const americanAudio = phonetics.find(p => p.text.includes('ər') && p.audio) || {};
+    const phoneticSpelling = phonetics.length > 0 ? phonetics.map(p => p.text).join(', ') : '';
 
     let meaningsHtml = '';
     meanings.forEach(meaning => {
@@ -38,12 +39,14 @@ function displayResults(data) {
 
         meaning.definitions.forEach(definition => {
             const def = definition.definition;
+            const example = definition.example || "No example available"; 
             const synonyms = definition.synonyms || [];
             const synonymsList = synonyms.length > 0 ? `<p class="synonyms"><strong>Synonyms:</strong> ${synonyms.join(', ')}</p>` : '';
 
             meaningsHtml += `
                 <p><strong>Part of Speech:</strong> ${partOfSpeech}</p>
                 <p><strong>Definition:</strong> ${def}</p>
+                <p><strong>Example:</strong> ${example}</p>
                 ${synonymsList}
                 <hr>
             `;
